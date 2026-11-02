@@ -1,0 +1,59 @@
+/* Genuine 3D WebGL rendering: meshes, normals, directional lighting, perspective camera, depth testing.
+ * The 2D canvas is only a caption/frame compositor for the exported film.
+ * Animation driven by elapsed timeline; no frame-count dependence. */
+'use strict';
+(()=>{
+const W=1280,H=720,DURATION=72,FPS=24,film=document.getElementById('film'),ctx=film.getContext('2d',{alpha:false});
+const threeD=document.getElementById('webgl');
+const gl=threeD.getContext('webgl',{antialias:true,preserveDrawingBuffer:true,powerPreference:'high-performance'});
+if(!gl){document.getElementById('status').textContent='WebGL אינו זמין בדפדפן זה';return;}
+const vs=`attribute vec3 p;attribute vec3 n;uniform mat4 projection,view,model;varying float lit;varying float fog;void main(){vec4 pos=view*model*vec4(p,1.0);gl_Position=projection*pos;vec3 norm=normalize(mat3(model)*n);lit=0.29+0.71*max(dot(norm,normalize(vec3(-0.48,0.86,0.5))),0.0);fog=clamp((-pos.z-2.0)/28.0,0.0,0.5);}`;
+const fs=`precision mediump float;varying float lit;varying float fog;uniform vec3 color;void main(){vec3 c=color*lit;gl_FragColor=vec4(mix(c,vec3(.031,.08,.125),fog),1.0);}`;
+function shader(type,code){const s=gl.createShader(type);gl.shaderSource(s,code);gl.compileShader(s);if(!gl.getShaderParameter(s,gl.COMPILE_STATUS))throw Error(gl.getShaderInfoLog(s));return s;}
+const program=gl.createProgram();gl.attachShader(program,shader(gl.VERTEX_SHADER,vs));gl.attachShader(program,shader(gl.FRAGMENT_SHADER,fs));gl.linkProgram(program);if(!gl.getProgramParameter(program,gl.LINK_STATUS))throw Error(gl.getProgramInfoLog(program));gl.useProgram(program);
+const loc={p:gl.getAttribLocation(program,'p'),n:gl.getAttribLocation(program,'n'),projection:gl.getUniformLocation(program,'projection'),view:gl.getUniformLocation(program,'view'),model:gl.getUniformLocation(program,'model'),color:gl.getUniformLocation(program,'color')};
+const I=()=>[1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1];
+const mul=(a,b)=>{let r=new Array(16).fill(0);for(let i=0;i<4;i++)for(let j=0;j<4;j++)for(let k=0;k<4;k++)r[j*4+i]+=a[k*4+i]*b[j*4+k];return r};
+const translate=(x,y,z)=>{let a=I();a[12]=x;a[13]=y;a[14]=z;return a};
+const scale=(x,y,z)=>{let a=I();a[0]=x;a[5]=y;a[10]=z;return a};
+const rotateY=t=>{let a=I();a[0]=Math.cos(t);a[2]=-Math.sin(t);a[8]=Math.sin(t);a[10]=Math.cos(t);return a};
+const perspective=(fov,aspect,near,far)=>{const f=1/Math.tan(fov/2),a=I();a[0]=f/aspect;a[5]=f;a[10]=(far+near)/(near-far);a[11]=-1;a[14]=2*far*near/(near-far);a[15]=0;return a;};
+const norm=a=>{const d=Math.hypot(...a);return a.map(v=>v/(d||1))};const cross=(a,b)=>[a[1]*b[2]-a[2]*b[1],a[2]*b[0]-a[0]*b[2],a[0]*b[1]-a[1]*b[0]];
+function lookAt(eye,target){const z=norm(eye.map((v,i)=>v-target[i])),x=norm(cross([0,1,0],z)),y=cross(z,x);return [x[0],y[0],z[0],0,x[1],y[1],z[1],0,x[2],y[2],z[2],0,-x.reduce((s,v,i)=>s+v*eye[i],0),-y.reduce((s,v,i)=>s+v*eye[i],0),-z.reduce((s,v,i)=>s+v*eye[i],0),1]}
+function mesh(vertices,normals){let p=gl.createBuffer();gl.bindBuffer(gl.ARRAY_BUFFER,p);gl.bufferData(gl.ARRAY_BUFFER,new Float32Array(vertices),gl.STATIC_DRAW);let n=gl.createBuffer();gl.bindBuffer(gl.ARRAY_BUFFER,n);gl.bufferData(gl.ARRAY_BUFFER,new Float32Array(normals),gl.STATIC_DRAW);return{p,n,count:vertices.length/3}}
+function boxMesh(){const p=[],n=[];const faces=[[[0,0,1],[[-1,-1,1],[1,-1,1],[1,1,1],[-1,1,1]]],[[0,0,-1],[[1,-1,-1],[-1,-1,-1],[-1,1,-1],[1,1,-1]]],[[1,0,0],[[1,-1,1],[1,-1,-1],[1,1,-1],[1,1,1]]],[[-1,0,0],[[-1,-1,-1],[-1,-1,1],[-1,1,1],[-1,1,-1]]],[[0,1,0],[[-1,1,1],[1,1,1],[1,1,-1],[-1,1,-1]]],[[0,-1,0],[[-1,-1,-1],[1,-1,-1],[1,-1,1],[-1,-1,1]]]];for(const [normal,points] of faces){for(let idx of [0,1,2,0,2,3]){p.push(...points[idx]);n.push(...normal);}}return mesh(p,n)}
+function cylinderMesh(sides=20){let p=[],n=[];for(let i=0;i<sides;i++){const a=i/sides*Math.PI*2,b=(i+1)/sides*Math.PI*2;for(const [ax,ay,az,bx,by,bz,cx,cy,cz] of [[Math.cos(a),-1,Math.sin(a),Math.cos(b),-1,Math.sin(b),Math.cos(b),1,Math.sin(b)],[Math.cos(a),-1,Math.sin(a),Math.cos(b),1,Math.sin(b),Math.cos(a),1,Math.sin(a)]]){p.push(ax,ay,az,bx,by,bz,cx,cy,cz);n.push(ax,0,az,bx,0,bz,cx,0,cz)}for(const [y,flip] of [[-1,-1],[1,1]]){const v0=[0,y,0],v1=[Math.cos(a),y,Math.sin(a)],v2=[Math.cos(b),y,Math.sin(b)];const tri=flip===1?[v0,v2,v1]:[v0,v1,v2];tri.forEach(v=>{p.push(...v);n.push(0,flip,0)})}}return mesh(p,n)}
+const box=boxMesh(),coin=cylinderMesh();gl.enable(gl.DEPTH_TEST);gl.enable(gl.CULL_FACE);gl.clearColor(.031,.08,.125,1);gl.uniformMatrix4fv(loc.projection,false,new Float32Array(perspective(Math.PI/3,W/H,.1,120)));
+const color=(h)=>[parseInt(h.slice(1,3),16)/255,parseInt(h.slice(3,5),16)/255,parseInt(h.slice(5,7),16)/255];
+function draw(m,x,y,z,sx,sy,sz,c,rot=0){gl.uniformMatrix4fv(loc.model,false,new Float32Array(mul(translate(x,y,z),mul(rotateY(rot),scale(sx,sy,sz)))));gl.uniform3fv(loc.color,color(c));gl.bindBuffer(gl.ARRAY_BUFFER,m.p);gl.vertexAttribPointer(loc.p,3,gl.FLOAT,false,0,0);gl.enableVertexAttribArray(loc.p);gl.bindBuffer(gl.ARRAY_BUFFER,m.n);gl.vertexAttribPointer(loc.n,3,gl.FLOAT,false,0,0);gl.enableVertexAttribArray(loc.n);gl.drawArrays(gl.TRIANGLES,0,m.count)}
+const C={navy:'#26465d',slate:'#486375',pale:'#7b8e97',gold:'#d9ae68',aqua:'#64bca8',crisis:'#d46b68',dark:'#172f41'};
+const captions=[
+ {at:0,end:9,title:'שנים של תמיכה',body:'במשך שנים תמכו בנקים בשערי מניותיהם.',k:'01  /  התמיכה'},
+ {at:9,end:20,title:'ביקוש שנוצר במערכת',body:'רכישות תומכות יצרו ביקוש וסייעו להחזיק את השערים.',k:'02  /  הוויסות'},
+ {at:20,end:31,title:'מארג של אינטרסים',body:'הפעולות השתלבו במערכת מורכבת של תמריצים וניגודי עניינים.',k:'03  /  המנגנון'},
+ {at:31,end:43,title:'יכולת מוגבלת',body:'כשהמכירות גברו, היכולת להמשיך ולתמוך נשחקה.',k:'04  /  מגבלת משאבים'},
+ {at:43,end:53,title:'6 באוקטובר 1983',body:'המסחר בבורסה הופסק למשך 18 ימים.',k:'05  /  נקודת השבר'},
+ {at:53,end:65,title:'הסדר ציבורי ארוך־טווח',body:'המדינה קיבלה התחייבויות פדיון עתידיות שנשאו עלויות ציבוריות.',k:'06  /  ההתערבות'},
+ {at:65,end:72,title:'מי נושא בסיכון?',body:'מי פיקח? מי קיבל החלטות? ומי נדרש לשלם?',k:'07  /  השאלה הפוליטית'}
+];
+let base=performance.now(),manual=null,recording=false;
+function scene(time){const shot=captions.findIndex(s=>time>=s.at&&time<s.end),t=time,phase=shot<0?6:shot,local=t-captions[phase].at;
+ gl.viewport(0,0,W,H);gl.clear(gl.COLOR_BUFFER_BIT|gl.DEPTH_BUFFER_BIT);
+ const angle=.38+Math.sin(t*.065)*.14+local*.01,ey=[Math.sin(angle)*12,7.4+Math.sin(t*.035)*.65,Math.cos(angle)*15];
+ gl.uniformMatrix4fv(loc.view,false,new Float32Array(lookAt(ey,[0,1,0])));
+ draw(box,0,-.55,0,8,.23,5,C.dark);for(let i=-6;i<=6;i++)draw(box,i,-.28,0,.012,.012,4,C.slate);for(let i=-4;i<=4;i++)draw(box,0,-.28,i,.012,.012,7,C.slate);
+ if(phase===0){const towers=[[-5,1,3],[-3,2.5,4],[-1,1.8,5],[1,1.4,4],[3,2.6,6],[5,1.8,3.7]];for(const [x,z,h] of towers){draw(box,x,h/2-.2,z,.69,h/2,.69,C.navy);draw(box,x,h-.05,z,.66,.12,.67,C.gold)}for(let i=0;i<15;i++){let x=-5+(i%5)*2.4,z=-1+Math.floor(i/5)*2,yy=.25+.18*Math.sin(i+t*1.4);draw(coin,x,yy,z,.28,.11,.28,i%3===0?C.aqua:C.gold,t*.6)}}
+ if(phase===1){draw(box,-3,1,0,1.2,1.5,1.2,C.navy);draw(box,-3,2.8,0,.9,.12,.9,C.gold);draw(box,3,.9,0,1.15,1.1,1.15,C.slate);for(let i=0;i<16;i++){let p=((t*1.1+i*.19)%4)/4;draw(coin,-3+6*p,.55+1.2*Math.sin(Math.PI*p),-.7+(i%3)*.6,.26,.11,.26,C.gold,t*.6)}for(let k=0;k<8;k++)draw(box,4,0.3+k*.37,2,.36,.16,.4,k<6?C.aqua:C.crisis)}
+ if(phase===2){const pts=[[-3,0],[-1,3],[3,2],[3,-2],[-1,-3]];pts.forEach(([x,z],i)=>{draw(box,x,.7,z,.78,.8,.78,i%2?C.slate:C.navy);draw(coin,x,1.75,z,.6,.08,.6,i%2?C.aqua:C.gold)});for(let i=0;i<24;i++){const a=i/24*Math.PI*2+t*.6,r=2.5+(i%3)*.12;draw(coin,r*Math.sin(a),.4+Math.sin(a*2+t)*.2,r*Math.cos(a),.2,.08,.2,i%2?C.gold:C.aqua,t)}}
+ if(phase===3){draw(box,-3.5,.5,0,1.3,1,1.2,C.navy);let remain=Math.max(0,1-local/12);draw(box,-3.5,1.6+remain*1.6,0,1.1,remain*1.6+.05,1,C.aqua);for(let i=0;i<30;i++){let p=(local*.6+i*.21)%4/4;draw(coin,6-8*p, .25+(i%4)*.25, -2+(i%5),.24,.1,.24,C.crisis,t)}for(let i=0;i<8;i++)draw(box,2+i*.38,.3+(i%3)*.3,0,.12,(i+1)*.13,.15,C.crisis)}
+ if(phase===4){for(let i=-4;i<=4;i++)draw(box,i,.4,1.9,.48,.7,.4,C.slate);const shutter=Math.min(1,local/6);for(let i=0;i<9;i++)draw(box,-4+i,2.5-1.3*shutter,-.3,.44,1.5*shutter+.1,.33,C.crisis);draw(box,0,2.35,-.8,5,.18,.5,C.gold);for(let i=0;i<6;i++)draw(coin,-3+i*1.2,.3,3,.24,.1,.24,C.crisis,t)}
+ if(phase===5){draw(box,-4,.8,0,1,1.1,1,C.navy);draw(box,0,.8,0,1,1.1,1,C.gold);draw(box,4,.8,0,1,1.1,1,C.aqua);for(let i=0;i<16;i++){let p=(local*.5+i*.15)%6/6;draw(coin,-4+8*p,.7+Math.sin(Math.PI*p)*.5,0,.22,.09,.22,p>.5?C.aqua:C.gold,t)}for(let i=0;i<5;i++)draw(box,-2+i*1.1,.3+(i*.12),-2,.25,.15+i*.07,.2,C.gold)}
+ if(phase===6){for(let i=0;i<4;i++){const a=i/4*Math.PI*2+t*.2;draw(box,Math.cos(a)*3,1.2,Math.sin(a)*3,.72,1.25,.72,[C.gold,C.aqua,C.slate,C.crisis][i],a)}draw(coin,0,1.1,0,.7,.16,.7,C.gold,t*.5);for(let i=0;i<14;i++){const a=i*Math.PI*2/14;draw(coin,Math.cos(a)*4.5,.2,Math.sin(a)*4.5,.14,.05,.14,C.gold,t)}}
+}
+function text(str,x,y,size,color='#f5f0e6',weight=600,align='right'){ctx.font=`${weight} ${size}px 'Noto Sans Hebrew',Arial,sans-serif`;ctx.fillStyle=color;ctx.textAlign=align;ctx.direction='rtl';ctx.fillText(str,x,y)}
+function compose(time){scene(time);ctx.fillStyle='#07121c';ctx.fillRect(0,0,W,H);ctx.drawImage(threeD,0,0);const fade=ctx.createLinearGradient(0,0,0,H);fade.addColorStop(0,'rgba(3,9,16,.64)');fade.addColorStop(.38,'rgba(3,9,16,0)');fade.addColorStop(.7,'rgba(3,9,16,.16)');fade.addColorStop(1,'rgba(3,9,16,.94)');ctx.fillStyle=fade;ctx.fillRect(0,0,W,H);const c=captions.find(x=>time>=x.at&&time<x.end)||captions[6];ctx.direction='ltr';ctx.textAlign='left';ctx.font='16px Arial';ctx.fillStyle='#d9ae68';ctx.fillText('BLACK THURSDAY / 1983',54,52);text('המחשה סכמטית · אינה תיעוד מצולם או נתוני מסחר',W-54,51,16,'#f1dfc4',400);text(c.k,W-60,105,20,'#d9ae68',650);text(c.title,W-60,538,42,'#f5f0e6',750);text(c.body,W-60,596,24,'#e0e9ea',500);ctx.fillStyle='rgba(255,255,255,.23)';ctx.fillRect(60,646,W-120,3);ctx.fillStyle='#d9ae68';ctx.fillRect(60,646,(W-120)*time/DURATION,3);ctx.direction='ltr';ctx.textAlign='left';ctx.fillStyle='#d0d9dc';ctx.font='16px Arial';ctx.fillText('CODE-GENERATED 3D • NOT ARCHIVAL FOOTAGE',60,678);ctx.textAlign='right';ctx.fillText(Math.round(time)+' / 72',W-60,678);}
+window.renderAt=(t)=>{manual=Math.max(0,Math.min(DURATION-.01,t));compose(manual)};
+function loop(){if(manual===null){const t=((performance.now()-base)/1000)%DURATION;compose(t)}requestAnimationFrame(loop);}loop();
+window.startCapture=async()=>{if(recording)throw Error('Recording in progress');recording=true;document.getElementById('status').textContent='מקליט 72 שניות…';let parts=[];manual=null;base=performance.now();const stream=film.captureStream(FPS);const mime=MediaRecorder.isTypeSupported('video/webm;codecs=vp8')?'video/webm;codecs=vp8':'video/webm';const recorder=new MediaRecorder(stream,{mimeType:mime,videoBitsPerSecond:2800000});recorder.ondataavailable=e=>{if(e.data.size)parts.push(e.data)};const stopped=new Promise(resolve=>recorder.onstop=resolve);recorder.start(4000);await new Promise(resolve=>setTimeout(resolve,DURATION*1000+500));recorder.stop();await stopped;const blob=new Blob(parts,{type:mime});recording=false;document.getElementById('status').textContent=`הקלטה הושלמה ${(blob.size/1024/1024).toFixed(1)}MB`;window.lastRecording=blob;const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='crisis-animation.webm';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),10000);return {size:blob.size,mime};};
+document.getElementById('restart').addEventListener('click',()=>{manual=null;base=performance.now()});document.getElementById('record').addEventListener('click',()=>window.startCapture().catch(e=>document.getElementById('status').textContent=e.message));
+})();

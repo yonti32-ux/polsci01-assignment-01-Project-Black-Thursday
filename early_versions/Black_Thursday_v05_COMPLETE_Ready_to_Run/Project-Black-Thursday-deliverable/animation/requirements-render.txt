@@ -1,0 +1,5 @@
+# ONLY required to regenerate the video. The already-encoded MP4 plays without these.
+numpy>=1.24
+opencv-python>=4.7
+Pillow>=10.0
+# System ffmpeg executable must be installed separately.

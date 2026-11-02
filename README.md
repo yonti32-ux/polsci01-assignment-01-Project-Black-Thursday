@@ -1,292 +1,169 @@
-<div align="center">
+# BLACK THURSDAY · יום חמישי השחור
 
-# 🏦 BLACK THURSDAY
+**An interactive political-economy documentary about the 1983 Israeli bank-share crisis**  
+**University of Haifa · Political Science · AI Vibe Coding · Assignment 01**  
+**Team:** Yonatan and Liron · **Group code:** `polsci01` (exactly eight characters)  
+**Project status (2 November 2026):** **Release candidate for final team + external review** — working prototype and media included; browser/sign-off/administrative checks remain.  
+**Live GitHub repository:** confirm the correct URL/remote before submitting (see [Repository verification](#repository-verification)).
 
-### יום חמישי השחור — משבר מניות הבנקים בישראל, 1983
+![Actual Hebrew opening slide](Project-Black-Thursday-deliverable/media/screenshots/opening.png)
 
-**The Political Economy of Israel's 1983 Bank-Share Crisis**
+> **Project in one minute:** A navigable **14-slide Hebrew RTL HTML presentation** uses original graphics, a code-rendered **82-second 3D-backed documentary video**, historical sources, and a **real Python-powered interactive simulator** to explain how long-running bank-share price support became an economic and political crisis in October 1983. The simulator is hypothetical, not a reconstruction of actual market prices.
 
-**An interactive historical documentary · 3D animation · Python-powered policy lab**
+## 🎯 Research question
 
-**University of Haifa · Political Science · AI & Vibe Coding · Assignment 01**
+**כיצד תרמו התמריצים והפעולות של הבנקים, המשקיעים, רשויות הפיקוח והמנהיגים הפוליטיים למשבר מניות הבנקים של 1983, ומה מלמדת התערבות המדינה על אחריות ציבורית וחלוקת סיכונים?**
 
-**Project team: Yonatan & Liron**
+We focus on institutional incentives, conflicts of interest, accountability, market confidence, systemic risk, and the distribution of costs between financial institutions and the public. The crisis is **not** attributed to one political figure.
 
-[Project Scope](#-project-overview) · [Development Status](#-development-status) · [Experience](#-the-planned-experience) · [Run Locally](#-running-the-project) · [Sources](#-historical-research) · [Documentation](#-documentation--development-evidence)
+## 🚀 Run the project
 
-</div>
+### Recommended: one-click Windows launch
 
----
+1. Clone or download the **complete repository**, then extract it completely if downloaded as a ZIP.
+2. Install **Python 3.11 or newer** (ensure `python` or `py -3` works in a terminal).
+3. Double-click **[`START_BLACK_THURSDAY.bat`](START_BLACK_THURSDAY.bat)** in the repository root.
+4. The launcher opens **http://127.0.0.1:8000/**. Leave its console window open while presenting.
+5. Navigate to slide 9 for the video and slide 13 for the interactive Python simulation.
 
-> [!IMPORTANT]
-> **Current status — 2 November 2026: Planning and development preparation.** The team has reported committing the initial `PRD.md` and granting both collaborators access. The historical research, storyboard, and master implementation prompt have been drafted, but their presence in this GitHub repository has **not yet been independently verified**. The HTML presentation, playable 3D video, and live Python simulation are **planned deliverables**, **not completed features**. This README will be updated with real instructions and screenshots as each milestone is implemented and tested.
+The Python app uses Flask if available; otherwise it uses a **Python standard-library fallback**, so the presentation should run without additional Python packages on a compatible Python installation. If port 8000 is occupied, stop the existing service or change the port consistently in the launcher and server.
 
-## 🎯 Project overview
+**macOS/Linux:** `sh START_BLACK_THURSDAY.sh` or `python3 launch_presentation.py`.
 
-**Black Thursday** is a Hebrew-language, interactive educational presentation exploring **Israel's 1983 bank-share crisis** through the lens of **political economy**.
+**Manual launch:**
 
-Rather than treating the crisis as a single-day market crash or the fault of one politician, the project asks how the incentives of banks, the decisions of investors, the responsibilities of regulatory institutions, and the government's intervention interacted over time. It examines the tensions between **financial stability, public accountability, government responsibility, and the distribution of risk**.
-
-The finished product is intended to combine three connected experiences:
-
-1. A polished **14-slide, right-to-left HTML documentary**, with historical explanations, interactive diagrams, citations, and navigable chapters.
-2. A **genuine object-based 3D animation**, built using Three.js, exported as a playable video, and embedded in the presentation.
-3. An **interactive Python-based educational model**, allowing visitors to compare simplified hypothetical scenarios involving investor confidence, selling pressure, banks' support capacity, and the timing of government intervention.
-
-**Central research question / שאלת המחקר**
-
-> כיצד תרמו התמריצים והפעולות של בנקים, משקיעים, רשויות פיקוח ומנהיגים פוליטיים למשבר מניות הבנקים ב־1983, ומה מלמדת ההתערבות הממשלתית על אחריות, פיקוח וחלוקת סיכונים בין המדינה לשוק?
-
-### Why political science?
-
-This is more than a financial-history timeline. The case provides a concrete way to examine **institutions and incentives**, **conflicts of interest**, **regulatory oversight**, **state–market relations**, **systemic risk**, and **who ultimately bears the costs of emergency intervention**. Historical findings will be distinguished from our team's interpretation.
-
----
-
-## 🚦 Development status
-
-| Milestone | Status | Evidence / next action |
-|---|---|---|
-| Project concept and hybrid documentary/simulation direction | ✅ Planned | Agreed by team in project planning |
-| Initial product requirements document (`PRD.md`) | ✅ Team-reported commit | Original PRD committed to existing repository; confirm version on GitHub |
-| Historical timeline, 14-slide storyboard, source/claim register | 🟡 Drafted | Add Phase 3 files to this repository and complete editorial review |
-| Master presentation implementation instructions | 🟡 Drafted | Add the actual prompt to `prompts/` and log its execution |
-| Root `README.md` | 🟡 Initial draft | Add this file to repository root; update as milestones are tested |
-| Navigable Hebrew RTL HTML presentation | ⬜ Not yet verified | Implement and test all planned slides |
-| Three.js scene **and actual embedded video file** | ⬜ Not yet verified | Build, export, embed, and verify browser playback |
-| Running Python API and interactive chart | ⬜ Not yet verified | Implement backend, integrate browser controls, test responses |
-| Screenshots, test report, external red-team critique | ⬜ Not yet verified | Capture real outputs and record actual tests |
-| Final GitHub access and individual Moodle PDF submissions | ⬜ Pending | Verify repository permissions and each student's submission |
-
-**Legend:** ✅ confirmed by the team / planning record · 🟡 drafted or awaiting repository verification · ⬜ not yet independently verified or completed. These marks are **not** automated build/test indicators.
-
-### Planned milestones
-
-`Research & PRD` → `HTML foundation` → `Academic slides & design` → `Three.js film` → `Python integration` → `QA & red team` → `Submission`
-
-**Last README content review:** 2026-11-02. Keep this date and table current after each meaningful push.
-
----
-
-## ✨ The planned experience
-
-### A historical documentary you can explore
-
-The presentation will be designed for a short university demonstration and for independent viewing: **14 Hebrew RTL slides**, navigation buttons, keyboard support, clear source references, and diagrams that explain financial mechanisms without relying on dense paragraphs.
-
-| Chapter | Slides | What the audience learns |
-|---|---|---|
-| **Context & institutions** | 1–3 | The crisis, economic background, and the main actors |
-| **How share-price support worked** | 4–6 | `ויסות מניות הבנקים`, conflicts of interest, and finite resources |
-| **The October 1983 crisis** | 7–9 | Warning signs, the market shutdown, and the explanatory 3D film |
-| **Intervention & accountability** | 10–12 | The government arrangement, public costs, and the Bejski inquiry |
-| **Policy lab & conclusions** | 13–14 | Hypothetical scenarios, interpretation, limitations, and sources |
-
-### 🎞️ A real 3D animation — not a slideshow of still images
-
-The animation will visualize **bank-share support, growing selling pressure, constrained resources, the October crisis, and government intervention** through animated three-dimensional objects, lighting, and moving cameras.
-
-- **Planned technology:** Three.js scene built in code.
-- **Planned presentation integration:** locally stored, playable MP4/WebM film in a slide-embedded `<video>` player.
-- **Planned duration:** approximately 60–70 seconds; final runtime will be measured after export.
-- **Integrity rule:** visual objects will be labeled as *schematic illustrations*, not authentic footage, real trades, or reconstructed historical prices.
-
-### 🐍 Python-powered policy lab
-
-The planned simulation will run in **Python**, expose results through a small **Flask** HTTP service, and update an interactive chart inside the HTML presentation. Visitors will be able to change simplified parameters and compare results across illustrative time periods.
-
-| Teaching-model input | Purpose |
-|---|---|
-| Investor confidence | Illustrates confidence-related selling behavior |
-| Selling pressure | Illustrates stress from shareholders wishing to sell |
-| Bank support capacity | Demonstrates limits on absorbing selling pressure |
-| Government intervention timing | Compares alternative assumptions about intervention |
-
-> [!CAUTION]
-> **Simulation ≠ history.** The planned model is an educational thought experiment. Its values are **not** observed 1983 stock prices, a fitted econometric estimate, reliable historical counterfactuals, or an investment forecast. Visualizations will use synthetic periods (e.g., 1–12), explicit units, assumptions, and a conspicuous Hebrew disclaimer.
-
----
-
-## 🖼️ Presentation gallery
-
-**Real application screenshots will appear here after the corresponding features have been implemented and captured.** We will not present AI-generated mockups as screenshots of functional software.
-
-| Planned screenshot | What it must demonstrate | Proposed repository path |
-|---|---|---|
-| Title slide | Working HTML slide and final visual design | `media/screenshots/slide-01.png` |
-| Financial mechanism | A legible source-backed interactive diagram | `media/screenshots/share-support.png` |
-| 3D film | A real frame from the **exported, playable** movie | `media/screenshots/threejs-video.png` |
-| Python simulation | A chart rendered after a **real Python API response** | `media/screenshots/python-simulation.png` |
-
-<!-- WHEN REAL OUTPUTS EXIST, replace this placeholder with actual embeds, for example:
-![Title slide from the running application](media/screenshots/slide-01.png)
-![3D animation frame from the exported film](media/screenshots/threejs-video.png)
-![Python simulation after a real API call](media/screenshots/python-simulation.png)
-Do not enable these links until the image files have been committed and verified on GitHub.
--->
-
----
-
-## 🧰 Planned technology stack and architecture
-
-| Layer | Technology | Role |
-|---|---|---|
-| Presentation | HTML5, CSS3, JavaScript | Accessible Hebrew RTL slide interface and navigation |
-| 3D animation | Three.js | Code-generated 3D geometry, scenes, and moving cameras |
-| Video | HTML5 `<video>` + local MP4/WebM asset | Reliable playback inside the deck |
-| Backend | Python 3 + Flask | Serve the app and process hypothetical simulation inputs |
-| Visualization | SVG / Canvas or a lightweight chart module | Show computed scenario results |
-| Development | Git, GitHub, AI coding assistant | Version control, collaboration, and iterative engineering |
-
-```mermaid
-flowchart TB
-    A[Visitor / Presenter] --> B[Hebrew RTL HTML Deck]
-    B --> C[Historical slides and sources]
-    B --> D[Embedded 3D documentary video]
-    E[Three.js source scene] --> F[Video export workflow]
-    F --> D
-    B --> G[Scenario sliders and controls]
-    G -->|POST /api/simulate| H[Local Python Flask API]
-    H --> I[Deterministic teaching model]
-    I -->|JSON results| H
-    H -->|Response| G
-    G --> J[Updated chart and explanation]
+```bash
+cd Project-Black-Thursday-deliverable
+python python/app.py
 ```
 
-**Architecture note:** This is a **planned** architecture, not documentation of a completed deployment. The implementation must genuinely call Python to count as an integrated feature.
+### Quick viewing without Python
 
----
+Open `Project-Black-Thursday-deliverable/presentation/index.html` as a local HTML file. The **slides and video can be viewed** in browsers that allow their local relative assets, but **slide 13 needs Python**; the UI warns rather than falsely pretending to calculate results. For the class evaluation and full feature demonstration, **use the one-click launcher**.
 
-## 💻 Running the project
+### Controls
 
-> **Not yet executable as a full application.** The repository currently has a team-reported PRD commit; no complete application/runtime has been independently verified. Do **not** assume the following instructions work until the corresponding files exist and a clean-install test has passed.
+- **←** next slide; **→** previous slide; **Home / End** jump to the first / last slide.
+- The on-screen table of contents jumps to a selected slide; presenter notes display contextual explanations and sources.
+- Slide 9 has embedded playback controls for the approved **v3 film**.
+- Slide 13 accepts four parameters (confidence, selling pressure, bank capacity, intervention timing), runs the **real Python model**, and renders twelve **illustrative** periods; scenarios can be compared or reset.
 
-### Read the current project specification
+## 🎬 Latest 3D documentary — Liron's visual direction
 
-Open [`PRD.md`](PRD.md) in this repository for the product requirements and intended functionality. The detailed implementation prompt and Phase 3 research documents are expected to be added separately.
+![Verified real-return comparison from the encoded v3 video](Project-Black-Thursday-deliverable/media/screenshots/film-v3-verified-returns.png)
 
-### Proposed local launch procedure — **to be tested and finalized after implementation**
+The current **`crisis-animation-v3.mp4`** is an **82-second, 1280×720, H.264** movie created with code-rendered 3D geometry and an abstract, animated financial-documentary overlay. It is built around **seven visual stages**. Liron's feedback drove the centered Hebrew text cards, uniform restrained motion, historically qualified numerical graphics, institutional analysis and prescribed palette:
 
-Requirements *once the app exists*: Windows PowerShell, Git, Python 3.11+ and a modern browser (Chrome or Edge). The final `requirements.txt`, port, and commands must be confirmed by an actual run.
+`#1c242c` · `#c19d43` · `#d3cebe` · `#1f3c58` · `#8ab9ee` · `#7a8694` · `#e7eef4` · `#f5cb39` · `#ed1c16`
 
-```powershell
-# 1. Clone the repository
- git clone https://github.com/yonti32-ux/polsci01-assignment-01-Project-Black-Thursday.git
- cd polsci01-assignment-01-Project-Black-Thursday
+Positive returns use blue, negative values red and documentary text beige. **The source technique is raw WebGL / Python rendering, not Three.js.** The original PRD proposed Three.js, but the actual implementation employs genuine 3D geometry and code-generated video. See [v3 export notes](Project-Black-Thursday-deliverable/animation/EXPORT_v3.md) and the [contemporary QA record](docs/history/ITERATION_v0.5_VIDEO_QA.md).
 
-# 2. Create a Python environment (only after the Python files exist)
- py -3 -m venv .venv
+**Verified historical figures depicted in the video:** January–September **1983 real returns** were **+8.6% for all commercial-bank shares** and **−57.5% for nonbank shares**, as listed in the December 1984 State Comptroller report, Table 1.3 (printed p. 19). They are **not** single-day 6 October price changes, historical banking-index levels, or Python simulation data.
 
-# 3. Install dependencies (only after requirements.txt exists)
- .\.venv\Scripts\python.exe -m pip install -r requirements.txt
+![Film contact sheet with all seven scenes](Project-Black-Thursday-deliverable/media/screenshots/film-v3-all-scenes.png)
 
-# 4. Start the local presentation server (only after python/app.py exists)
- .\.venv\Scripts\python.exe python\app.py
+## 🖼️ Other real presentation screenshots
+
+| Schematic share-support mechanism | Hypothetical policy simulator |
+|:---:|:---:|
+| ![Actual slide 4 screenshot](Project-Black-Thursday-deliverable/media/screenshots/slide-04.png) | ![Actual simulator screenshot](Project-Black-Thursday-deliverable/media/screenshots/python-simulation.png) |
+
+These images are captures from the working project, not prospective mockups. Captions indicating abstract illustrations are intentional.
+
+## 🐍 Python: real computation, clearly hypothetical model
+
+```text
+Desktop browser
+  ├─ 14-slide RTL HTML presentation (HTML / CSS / JS)
+  ├─ embedded local code-rendered 3D documentary (MP4)
+  └─ slide 13 user controls
+            │ JSON POST /api/simulate
+            ▼
+  Python local server (Flask OR stdlib WSGI)
+            │
+            ▼
+  Deterministic 12-period educational stress model
+            │ JSON result
+            ▼
+  On-screen interactive chart and explanation
 ```
 
-**Planned** browser address: `http://127.0.0.1:8000/`. The implemented app may use a different port; update this README after a successful launch. At that time, also document navigation keys, simulation controls, video playback, and troubleshooting, with screenshots.
+Core source paths: [`python/simulation.py`](Project-Black-Thursday-deliverable/python/simulation.py), [`python/app.py`](Project-Black-Thursday-deliverable/python/app.py), and [model assumptions](docs/model-methodology.md). The model is illustrative, with finite support budgets and arbitrary teaching parameters. **It is not fitted to 1983 market data and cannot establish what would actually have happened under other policies.**
 
-> [!TIP]
-> Once a runnable version is available, follow these commands on a fresh checkout. If any command fails, record the failure and fix the README or the software before claiming the app is ready.
+**Run tests** from the `Project-Black-Thursday-deliverable/` folder:
 
----
+```bash
+python -m unittest discover -s python/tests -v
+```
 
-## 📚 Historical research
+Latest independent command-line verification during documentation review (2 November 2026): **8/8 tests passed**; local server returned HTTP 200 for `/`, `/api/health`, the v3 video and presentation JavaScript. A full browser-to-server interaction was **attempted** but blocked by the evaluation environment (`ERR_BLOCKED_BY_ADMINISTRATOR`). The team must run it in Chrome/Edge before final sign-off. See [final review report](docs/FINAL_REVIEW_REPORT.md).
 
-Our research prioritizes institutional documentation, contemporary records, and scholarly analysis. The narrative distinguishes **verified historical facts**, **the team's political-science analysis**, **schematic animation**, and **hypothetical model output**.
+## 🧭 Presentation and research content
 
-**Selected starting references:**
+The 14-slide structure moves from economic context and banking actors, through the price-support mechanism and 1983 selling pressure, to the exchange suspension, 3D film, intervention, public exposure, Bejski inquiry, Python policy lab and political-science conclusions. Slides include research source IDs and presenter notes.
 
-- **State Comptroller of Israel (1993)** — [ההיערכות למכירת מניות הבנקים שבהסדר](https://library.mevaker.gov.il/sites/DigitalLibrary/Pages/Publications/641.aspx): intervention, state exposure, and accounting caveats.
-- **Natalie Leonard (2021), Yale Program on Financial Stability** — [Israeli Bank Shares Arrangement](https://elischolar.library.yale.edu/journal-of-financial-crises/vol3/iss3/13/): crisis background, share support, and government arrangement.
-- **Blass & Grossman (1996), Bank of Israel working paper** — [A Harmful Guarantee? The 1983 Israel Bank Shares Crisis Revisited](https://www.boi.org.il/media/rn3favup/dp9603e.pdf): research on the crisis and intervention.
-- **Israel Ministry of Justice** — [פרשת ויסות מניות הבנקים](https://www.gov.il/BlobFolder/reports/roots_1983/he/roots-1983.pdf): legal and institutional retrospective.
+Historical sources include the **1984 State Comptroller report** (*דו״ח על מניות הבנקים — משבר אוקטובר 1983*), the separate **1993 State Comptroller report** on government holdings, Yale's *Israeli Bank Shares Arrangement* case, a Bank of Israel research paper, and the Ministry of Justice legal retrospective. The research register used by the live slides is [`research/sources.md`](Project-Black-Thursday-deliverable/research/sources.md) and [`claim-register.csv`](Project-Black-Thursday-deliverable/research/claim-register.csv). Earlier Phase 3 research is retained in [`docs/history/`](docs/history/) as **archived planning evidence, not the current source-ID authority**.
 
-For detailed claims, source locations, and unresolved questions, the planned research documents are `research/sources.md`, `research/historical-timeline.md`, and `research/claim-register.csv`. **Only link to them as completed documents once they are committed to this repository.**
+**Historical integrity safeguards:**
 
-### Accuracy safeguards
+- **6 October 1983:** stock-exchange trading was suspended; do not depict the exchange building physically collapsing or all bank deposits disappearing.
+- The banking share-support system ran for years; **Yoram Aridor** was **Finance Minister**, not the sole person who created the crisis.
+- Distinguish the **October 1983 bank-share arrangement** from the **July 1985 stabilization plan**.
+- Distinguish share-support inventory, estimated future rescue commitments, **gross public expenditure**, and the state's eventual **net financial loss**; these are not interchangeable.
+- The video, schematic graphs, and 12-period model are not filmed archival events or reconstructed share-price histories. Label them as illustrations or simulations.
+- The slides' source IDs apply only to the current app registry. The archived Phase 3 source ID scheme is different; see [crosswalk](docs/history/SOURCE_ID_CROSSWALK.md).
+- Any reused archival media must have checked attribution and redistribution rights; see [`media/ASSET-CREDITS.md`](Project-Black-Thursday-deliverable/media/ASSET-CREDITS.md).
 
-- The 1983 crisis cannot responsibly be attributed to **Yoram Aridor alone**. He served as **Minister of Finance**, not “Minister of Economy.”
-- **6 October 1983** marks the stock-exchange shutdown. The precise language around the late-October reopening should be tied to an authoritative original record if an exact reopening date is displayed.
-- The **1983 banking rescue** and the **1985 macroeconomic stabilization plan** are separate policies.
-- Government **expenditure** on the arrangement must not be represented as the state's definitive **net loss** without accounting for its acquired shares and subsequent proceeds.
-- Do not invent contemporaneous quotations, archival footage, trading statistics, newspaper pages, or share-price curves.
-- Only use historical photographs and artwork after checking permissions, licenses, and attribution; original charts and 3D objects are preferred.
+## 🗂️ Repository map (canonical current structure)
 
----
+```text
+README.md                       ← this project homepage
+PRD.md                          ← current v1.3 specification + history
+START_BLACK_THURSDAY.bat        ← Windows full-feature launcher
+START_BLACK_THURSDAY.sh         ← macOS/Linux launcher
+launch_presentation.py          ← launcher helper
+Project-Black-Thursday-deliverable/
+  presentation/                ← live HTML/CSS/JS deck
+  media/video/                 ← v3 film + prior genuine versions
+  media/screenshots/           ← actual screenshots
+  animation/                   ← inspectable 3D source + exports
+  python/                      ← local server, simulation and tests
+  research/                    ← canonical slide-source registry
+  docs/                        ← implementation notes
+prompts/                       ← real prompt history, including Liron's revisions
+docs/
+  FINAL_REVIEW_REPORT.md        ← current technical/historical audit
+  RELEASE_CHECKLIST.md         ← check-off tasks before submission
+  SELF_ASSESSMENT.md            ← team rationale / score placeholder
+  reviews/                     ← independent Gemini assessment
+  history/                     ← original PRD, early storyline, older QA
+```
 
-## 🗂️ Documentation & development evidence
+**Why no `v04/` or `v05/` duplicate build directories?** Earlier versions belong in Git commit history and the documented prompts/QA. This review candidate retains *one canonical runnable presentation* and preserves substantive historical files rather than three competing copies of the application. The source ZIP and its `.git` history should remain backed up until the candidate is merged into the real clone.
 
-The course evaluates **how the team directs, tests, and improves the AI-generated product**, as well as the final output. We preserve decisions and meaningful iterations rather than manufacturing a perfect-looking history after the fact.
+## 🧪 Project process and review
 
-| Path | Purpose | Availability |
-|---|---|---|
-| `PRD.md` | The initial product requirements document | Team reports committed |
-| `README.md` | Project introduction, current status, verified launch instructions and gallery | **This file — ready to commit** |
-| `research/` | Historical timeline, references, claim-level verification | Phase 3 drafts; repository integration pending verification |
-| `content/storyboard.md` | Hebrew script, visuals, narrator notes, and interactions for 14 slides | Phase 3 draft; repository integration pending verification |
-| `prompts/` | Real prompts, AI outputs, corrections and specific instructions | Establish in repository; never fabricate earlier messages |
-| `animation/` | Three.js source and reproducible video export steps | Planned |
-| `presentation/` | The actual HTML/CSS/JavaScript deck | Planned |
-| `python/` | Flask app, model and tests | Planned |
-| `media/` | Final video, original/cleared imagery, **real** screenshots | Planned |
-| `docs/development-log.md` | Milestones, decisions and known limitations | Planned |
-| `docs/testing-report.md` | Tests attempted, failures, fixes and evidence | Planned |
-| `docs/release-checklist.md` | Final GitHub, rights and university submission review | Planned |
+1. Initial PRD and initial story concept; historical research corrected the original one-person explanation.
+2. HTML presentation, animation, and Python educational model were built, committed and tested.
+3. Liron requested a clearer, more abstract, precisely styled 3D video; v2 and v3 iterations and captured output were recorded.
+4. Additional **1984 primary-source data** was used to correct the return visualization and sharpen regulatory accountability.
+5. The current stage is **final consolidation**, followed by **independent Gemini red-team evaluation** and targeted final corrections, if any.
 
-### Our development protocol
+See [real prompts](prompts/), [original document history](docs/history/), [final audit](docs/FINAL_REVIEW_REPORT.md), and [Gemini review prompt](prompts/06-gemini-independent-review-prompt.md). **Do not invent prompt exchanges, reviewer scores, screenshots or user tests.**
 
-1. **Plan:** Define the expected change in the PRD or an explicit prompt.
-2. **Build:** Implement a bounded milestone; avoid unrelated changes.
-3. **Test:** Run the actual feature and record observed results.
-4. **Review:** Critique factual accuracy, UI/UX, accessibility, code, and historical interpretation; use an independent LLM as a skeptical reviewer when practical.
-5. **Improve:** Make precise corrections, explaining what changed and why.
-6. **Document:** Update `README.md` **at the same milestone**, add genuine prompts and test evidence, commit and push meaningful changes.
+## ✅ Submission and academic self-assessment
 
-**At every meaningful release, update:** the status table and date; new features; verified run commands; actual screenshots and media; sources and claims; outstanding defects; test results; latest milestone and next action. Never mark untested requirements as complete.
+- **GitHub** must be **public** or grant the lecturer access at `rmisegal@gmail.com` (a teammate's collaborator access alone is insufficient). Confirm the correct remote URL before sharing it.
+- The team has an exactly eight-character code: **`polsci01`**.
+- Both students must **individually** submit the official university **Word form saved as PDF** to Moodle; **do not submit Word** or change the template layout. Assuming exercise number `01`, the filename is **`polsci01-ex01.pdf`**. Verify the Moodle exercise number and deadline.
+- **Gemini's score is an independent red-team assessment**, not a Moodle submission. Save a faithful summary or the unedited feedback in [`docs/reviews/`](docs/reviews/) and explain any changes. Then set the team's **recommended self-grade in the designated field of the official submission form**, with a justification consistent with the final work. If there is no field, follow Moodle/lecturer instructions instead of adding free text to the template.
+- The official PDF may contain private student ID numbers: **do not commit it to a public repository**. Each student uploads it privately to Moodle.
 
-### Collaboration
+The project is a **release candidate**, not a claim of final university approval. The [release checklist](docs/RELEASE_CHECKLIST.md) contains outstanding browser, reviewer and access checks.
 
-**Yonatan and Liron** are collaborating on research, editorial judgment, implementation, testing, and documentation. Specific responsibilities may vary by milestone. Both students remain responsible for verifying the political-science conclusions; AI assistance does not replace their judgment.
+## Repository verification
 
----
-
-## ✅ Release and submission checklist
-
-The following are **pending checks**, not claims that submission has occurred:
-
-- [ ] Repository contains a complete, working Hebrew RTL HTML presentation.
-- [ ] An actual playable 3D animation video is embedded and its Three.js source is committed.
-- [ ] Python executes in the presentation workflow and visibly updates at least one component.
-- [ ] Historical claims and quantitative statements have traceable references.
-- [ ] README includes **real** screenshots of the deck, video and Python results.
-- [ ] `PRD.md`, `prompts/`, sources, tests and milestone history are committed.
-- [ ] The repository is **public**, or the lecturer has verified access via `rmisegal@gmail.com`.
-- [ ] The team has a unique group code of **exactly eight characters** (without spaces).
-- [ ] The official Word reporting template is filled **without layout changes** and exported to PDF, with filename `xxxxxxxx-exyy.pdf` (verify exercise number).
-- [ ] **Each student separately** uploads their PDF to Moodle and verifies receipt.
-- [ ] The team writes a justified, evidence-based recommended self-grade.
-
-**Privacy:** Student ID numbers, private certificates and medical documents must **not** be committed to this repository.
+**Repository URL discrepancy detected in the student's uploaded ZIP:** its embedded Git remote is `https://github.com/yonti32-ux/AI-Vibe-coding--assignment-01-Project-Black-Thursday`, whereas an earlier conversation supplied `https://github.com/yonti32-ux/polsci01-assignment-01-Project-Black-Thursday`. We could **not** verify which one is accessible from this environment. Run `git remote -v` in your actual clone and confirm the publicly accessible or lecturer-authorized URL **before** submitting a link. Do not change the remote based on guesswork.
 
 ---
-
-## 📝 README change log
-
-| Date | Revision | Description |
-|---|---|---|
-| 2026-11-02 | `README v0.1 — project introduction` | Initial living README based on the planning record, course requirements, and master implementation specification. No implementation screenshots, verified runtime, or tests claimed. |
-
-*Future README revisions should be committed alongside the actual development milestone they describe.*
-
----
-
-<div align="center">
-
-**Project Black Thursday** · *History, institutions, and political economy — made interactive.*
-
-Developed by **Yonatan & Liron** · University of Haifa
-
-[Back to top ↑](#-black-thursday)
-
-</div>
+*Documentation review date: 2 November 2026 · Team: Yonatan & Liron · Project code: `polsci01`.*

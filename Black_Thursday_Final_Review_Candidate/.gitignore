@@ -1,0 +1,17 @@
+# Runtime-generated and local-only files
+__pycache__/
+*.py[cod]
+.venv/
+.env
+.env.*
+*.log
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.tmp
+~$*
+
+# Submission report contains students’ private IDs: submit via Moodle, do not push
+polsci01-ex*.pdf
+submissions/

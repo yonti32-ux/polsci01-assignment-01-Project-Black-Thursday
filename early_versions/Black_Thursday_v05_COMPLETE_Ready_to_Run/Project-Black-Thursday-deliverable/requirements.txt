@@ -1,0 +1,4 @@
+# Optional for the local web/API server: stdlib fallback requires no pip packages.
+Flask>=3.0,<4.0
+# The offline 3D movie export script additionally uses NumPy, OpenCV and Pillow.
+# These are production dependencies for re-rendering the video, NOT for showing it.

@@ -1,0 +1,18 @@
+claim_id,slide,wording_he,source_ids,source_section,status,review_notes
+C001,1,משבר מניות הבנקים בשנת 1983,S02|S04,S02 abstract,checked_general,הקו הגרפי סמלי בלבד
+C002,2,אינפלציה גבוהה ופיחות במטבע,S02|S05,S02 abstract; S05 article,checked_general,הרקע אינו סיבת הוויסות היחידה
+C003,2,שיעור אינפלציה 445% ב-1984 ותוכנית ייצוב ב-1985,S05,Bankipedia hyperinflation page,verified_public_page,לא לערבב עם 1983
+C004,3,בנקים משקיעים פיקוח וממשלה בעלי תמריצים שונים,S01|S02,S01 preface; S02 abstract,analysis_team_review,תיאור מוסדי כללי
+C005,4,רכישות בנקאיות תמכו בשערי המניות,S01|S02,S01 preface; S02 abstract,verified_public_page,הגרף סכמטי
+C006,5,הפצה המלצות ורכישות עשויות ליצור ניגודי עניינים,S02|S04,S02 abstract; S04 research,needs_page_verification,לא כל מוסד עסק בכל פעילות
+C007,6,יכולת התמיכה לא הייתה בלתי מוגבלת,S02|S07,S02 abstract; S07 opening,verified_public_page,מאגר קיבולת מומצא
+C008,7,המעבר למטבע חוץ והגברת היצעי המכירה,S02,S02 abstract,verified_public_page,ללא סדרת מחירים יומית
+C009,8,6 באוקטובר 1983 הופסק המסחר בבורסה ל-18 ימים,S02,S02 abstract,verified_public_page,ללא יום פתיחה מדויק
+C010,9,תמיכה לחץ מכירות מגבלה עצירת מסחר והסדר,S01|S02,S01 preface; S02 abstract,verified_general,וידאו תלת-ממדי מומחש
+C011,10,הסדר יצר התחייבויות פדיון עתידיות,S01|S02,S01 preface; S02 abstract,verified_public_page,אין הנחת תשלום מידי
+C012,10,יורם ארידור התפטר ב-13 באוקטובר 1983 על רקע הצעת דולריזציה,S08,Washington Post Oct 14 dispatch,verified_public_page,אירוע נפרד אך סמוך
+C013,11,הוצאה מצטברת כ-9.1 מיליארד דולר עד סוף אוקטובר 1991 כולל מימון,S01,S01 preface,verified_public_page,לא הפסד סופי נטו
+C014,11,הפסד נטו תלוי בתמורה ממכירת מניות,S01,S01 preface,verified_public_page,אין נתון תמורה סופי במצגת
+C015,12,ועדת בייסקי הגישה דוח ב-16 באפריל 1986,S07,S07 legal chronology; IDI table,checked_secondary_primary_review_pending,להבחין דוח מול פסק דין
+C016,13,תרחיש עם משאבים סופיים משנה מדד יציבות במודל מומצא,MODEL_V1,python/simulation.py,validated_as_simulation,אין יומרה היסטורית
+C017,14,תמריצים פיקוח וסיכונים ציבוריים הם לקחים מוסדיים,S01|S02|S07,Synthesis,analysis_team_review,המסקנות הן של הסטודנטים
