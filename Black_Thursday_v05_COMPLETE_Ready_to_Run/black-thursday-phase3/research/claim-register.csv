@@ -1,0 +1,26 @@
+﻿claim_id,slide,hebrew_claim_or_concept,source_ids,location_in_source,status,notes
+C01,1,ב־6 באוקטובר 1983 פרץ המשבר והמסחר הופסק,S01;S03,S01 abstract; S03 intro,verified,Crisis date; do not present as sole precipitating event
+C02,1,המשבר התמקד במניות בנקים ועורר סיכון למערכת הפיננסית,S04;S02,S04 opening; S02 introduction,verified,Distinguish bank shares from ordinary deposits
+C03,2,ראשית שנות ה־80 התאפיינה באינפלציה גבוהה ובשחיקת השקל,S01;S05,S01 abstract; S05 Bankipedia inflation,verified,No unsourced exact 1983 rate
+C04,2,445% הוא שיעור אינפלציה שנתי לשנת 1984,S05,Bankipedia annual inflation 1984,verified,1985 stabilization separately
+C05,3,בבנקים מרכזיים נעשתה תמיכה בשערי מניותיהם,S01a;S02,S01a At a Glance; S02 introduction,verified,Not every Israeli bank
+C06,3,לרשויות ציבוריות שונות היו תפקידי פיקוח והתערבות,S01a;S02;S04,S01a At a Glance; S02 intro; S04,verified,Exact legal authority needs pinpoint if detailed
+C07,"4,9",בנקים וגופים קשורים רכשו מניות כדי לתמוך בשערים,S01a;S02;S03,S01a At a Glance; S02 introduction; S03,verified,Schematic arrows should be labeled as illustration
+C08,5,השפעה על המסחר באמצעות קרנות/אשראי/תיווך יצרה ניגודי עניינים,S01a;S02,S01a At a Glance; S02 intro,verified,Do not assert identical behavior for every bank
+C09,"6,9",לחץ מכירה גובר חייב רכישות גדלות והגביל יכולת תמיכה,S01a;S03,S01a At a Glance; S03 intro,verified,Never imply exact support capacity in invented units
+C10,7,בינואר 1983 נרשמה ירידה חדה במניות לא-בנקאיות,S01a,S01a At a Glance,verified,"Scholarly retrospective, not a daily reconstructed chart"
+C11,7,משקיעים מכרו מניות בנקים והעבירו השקעות למטבע חוץ,S01a;S03,S01a At a Glance; S03,verified,Trend not universal investor motivation
+C12,"8,9",6.10.1983 הבורסה הפסיקה מסחר ל־18 ימים,S01;S03;S04,S01 abstract; S03 introduction; S04 opening,verified,Reopening exact 24/25 flagged separately
+C13,"9,10",באוקטובר 1983 גובש הסדר מניות הבנקים עם התחייבויות עתידיות,S01a;S02;S04,S01a Governance; S02 intro; S04,verified,No immediate $9bn cash disbursement
+C14,10,המדינה קיבלה בהמשך אחזקות נרחבות בבנקים בלי לשלוט מיד בכל הניהול,S01a,S01a Governance; Fate of Management,verified,Ownership versus management distinction
+C15,10,יורם ארידור היה שר האוצר והתפטר ב־13.10.1983 סביב הצעת דולריזציה,S08,Washington Post report Oct 14 1983,verified,Contemporaneous; no single-cause narrative
+C16,11,מבקר המדינה: כ־9.1 מיליארד דולר הוצאה עד סוף אוקטובר 1991 כולל מימון,S02,"S02 introduction, expenditures paragraph",verified,Must show full qualified measure
+C17,11,הוצאה מצטברת אינה זהה להפסד נטו למדינה; יש להביא בחשבון מכירות,S02,S02 paragraph beginning ההפסד הכספי הישיר,verified,Do not silently equate other Yale estimates
+C18,12,ועדת בייסקי פרסמה דו״ח ב־16.4.1986,S06,Judicial procedural chronology,verified,Commission not a criminal court
+C19,12,שאלות אחריות מוסדית נבחנו בעקבות המשבר,S04;S06;S02,S04 legal retrospective; S06; S02,verified,Any specific blame requires official finding quotation
+C20,13,תוצאות מודל פייתון הן סימולציה חינוכית היפותטית,MODEL,PRD section 7; model methodology forthcoming,planned,Not a historical fact; no sourced numeric model output
+C21,14,תמריצים ניגודי עניינים פיקוח והתערבות ציבורית מלמדים על יחסי מדינה ושוק,S01a;S02;S04,Interpretation informed by listed sources,analytical,Must be student-approved analysis; not a direct quote
+C22,10,המסחר שב לפעול ב־24 באוקטובר 1983,S01a;S07;S10,S01a operational date; S07 timeline versus S10 JTA,pending,Conflicting JTA contemporaneous 24/25 wording; omit exact date until checked
+C23,14,תוכנית הייצוב הכלכלית הונהגה ב־1985 ולא ב־1983,S05,Bankipedia stabilization question,verified,Separate from October 1983 rescue
+C24,3,הבנק הבינלאומי הראשון לא השתתף בוויסות הבנקים,S01a,S01a Eligible Institutions,verified,Use historical exact name; distinguish participants
+C25,11,$6.9bn and $9.2bn in Yale use different bases/definitions,S01a;S02,S01a abstract and Program Size; S02 introduction,requires_definition,Do not publish as if figures reconcile automatically
