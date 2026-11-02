@@ -1,0 +1,40 @@
+BLACK THURSDAY v0.4 — COMPLETE TEST PACKAGE (polsci01)
+
+THIS ZIP IS STANDALONE. Unlike the earlier SELECTIVE UPDATE ZIP,
+it includes the existing server (python/app.py), presentation, video,
+Python simulation, source documents and updated launch scripts.
+
+WINDOWS — QUICK START:
+1. Extract ALL files from this ZIP into one folder on your computer.
+   Do not run the launcher from inside Windows ZIP preview.
+2. Open that extracted folder.
+3. Double-click START_BLACK_THURSDAY.bat (requires Python 3.11+ installed).
+4. Your browser should open http://127.0.0.1:8000/
+5. Keep the terminal window open while presenting; close it afterward.
+
+CHECK THE FOLDER LAYOUT:
+  START_BLACK_THURSDAY.bat
+  launch_presentation.py
+  Project-Black-Thursday-deliverable/
+      python/app.py
+      presentation/index.html
+      media/video/crisis-animation-v2.mp4
+
+STATIC MODE (no Python):
+Double-click Project-Black-Thursday-deliverable/presentation/index.html.
+Slides and video can work, but the Python simulation cannot execute.
+
+GITHUB SAFETY:
+This package is an integrated snapshot derived from the repository
+ZIP previously uploaded by the team, plus v0.4 changes. It does NOT
+include .git metadata. Do NOT replace your current GitHub clone with
+this folder and assume you'll keep your newer commits or Liron's work.
+For GitHub updates, compare files and merge on a new feature branch.
+
+TROUBLESHOOTING:
+- "Python not found": Install Python 3.11+ or configure PATH.
+- Port 8000 is used: close the existing server before launching again.
+- File missing: confirm you extracted the entire COMPLETE ZIP, not
+  only Black_Thursday_v04_Selective_Update.zip.
+- Windows SmartScreen warning: only run files you trust; source code
+  for the local launcher and server is included for inspection.
